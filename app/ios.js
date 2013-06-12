@@ -1410,7 +1410,7 @@ IOS.prototype.getPageSource = function(cb) {
       this.processingRemoteCmd = false;
     }, this));
   } else {
-    this.proxy("wd_frame.getPageSource()", cb);
+    this.proxy("target.frontMostApp().getPageSource()", cb);
   }
 };
 
