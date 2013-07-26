@@ -608,8 +608,7 @@ exports.refresh = function(req, res) {
 };
 
 exports.keys = function(req, res) {
-  var keys = req.body.value.join('');
-
+  var keys = req.body.value
   req.device.keys(keys, getResponseHandler(req, res));
 };
 
@@ -968,6 +967,7 @@ var mobileCmdMap = {
   , 'shake': exports.mobileShake
   , 'setLocation' : exports.mobileSetLocation
   , 'hideKeyboard': exports.hideKeyboard
+  , 'keys': exports.keys
   , 'setCommandTimeout': exports.setCommandTimeout
   , 'getCommandTimeout': exports.getCommandTimeout
   , 'findAndAct': exports.findAndAct
