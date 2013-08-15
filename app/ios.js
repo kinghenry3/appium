@@ -1406,7 +1406,18 @@ IOS.prototype.lock = function(secs, cb) {
 };
 
 IOS.prototype.background = function(secs, cb) {
-  this.proxy(["au.background(", secs, ")"].join(''), cb);
+  // If negative seconds is used, then assume where generating code coverage.
+  // Since where generating code coverage, sending the app to the background
+  // will kill it.  If it dies, it will never invoke cb() which means our
+  // selenium driver will hang for 60 seconds (the default timeout) before
+  // timing out. In order to avoid this wait, lets invoke cb() first.
+  if (secs < 0) {
+    cb();
+    this.proxy(["au.background(1)"].join(''), null);
+  }
+  else {
+    this.proxy(["au.background(", secs, ")"].join(''), cb);
+  }
 };
 
 IOS.prototype.getOrientation = function(cb) {
